@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhitungan Bonus Pembelian</title>
+    <b></b>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container{
+            width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            text-align: center;
+            color: #333;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        input{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hitung{
+            background-color: #28a745;
+            color: white;
+        }
+
+        .reset{
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .hasil{
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #28a745;
+            display: none;
+            color: white;
+        }
+
+        p{
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Perhitungan Bonus Pembelian</h2>
+
+    <label>Nama Pelanggan</label>
+    <input type="text" id="pelanggan">
+
+    <label>Nama Produk</label>
+    <input type="text" id="produk">
+
+    <label>Harga Produk</label>
+    <input type="number" id="harga">
+
+    <label>Jumlah Pembelian</label>
+    <input type="number" id="jumlah">
+
+    <button class="hitung" onclick="hitung()">Hitung</button>
+    <button class="reset" onclick="resetForm()">Reset</button>
+
+    <div class="hasil" id="hasil">
+        <h3>Hasil Perhitungan</h3>
+
+        <p><b>Nama Pelanggan :</b> <span id="outPelanggan"></span></p>
+        <p><b>Nama Produk :</b> <span id="outProduk"></span></p>
+        <p><b>Total Belanja :</b> <span id="outBelanja"></span></p>
+        <p><b>Potongan :</b> <span id="outPotongan"></span></p>
+        <p><b>Total Bayar :</b> <span id="outBayar"></span></p>
+    </div>
+</div>
+
+<script>
+
+function hitung(){
+
+    let pelanggan = document.getElementById("pelanggan").value;
+    let produk = document.getElementById("produk").value;
+    let harga = parseFloat(document.getElementById("harga").value);
+    let jumlah = parseInt(document.getElementById("jumlah").value);
+
+    // Validasi
+    if(pelanggan === "" || produk === "" || isNaN(harga) || isNaN(jumlah)){
+        alert("Semua input wajib diisi!");
+        return;
+    }
+
+    let totalBelanja = harga * jumlah;
+    let potongan = 0;
+
+    // Percabangan IF
+    if(totalBelanja >= 400000){
+        potongan = totalBelanja * 0.10; // diskon 10%
+    }
+
+    let totalBayar = totalBelanja - potongan;
+
+    document.getElementById("outPelanggan").innerText = pelanggan;
+    document.getElementById("outProduk").innerText = produk;
+    document.getElementById("outBelanja").innerText =
+        "Rp " + totalBelanja.toLocaleString('id-ID');
+
+    document.getElementById("outPotongan").innerText =
+        "Rp " + potongan.toLocaleString('id-ID');
+
+    document.getElementById("outBayar").innerText =
+        "Rp " + totalBayar.toLocaleString('id-ID');
+
+    document.getElementById("hasil").style.display = "block";
+}
+
+function resetForm(){
+    document.getElementById("pelanggan").value = "";
+    document.getElementById("produk").value = "";
+    document.getElementById("harga").value = "";
+    document.getElementById("jumlah").value = "";
+
+    document.getElementById("hasil").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
